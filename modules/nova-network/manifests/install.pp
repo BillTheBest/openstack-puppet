@@ -4,7 +4,7 @@ class nova-network::install {
     ensure => latest,
     require => [
       File["nova-default"],
-      Apt::Source["rcb"]
+      Apt::Source["openstack-nova-trunk"]
     ]
   }
 

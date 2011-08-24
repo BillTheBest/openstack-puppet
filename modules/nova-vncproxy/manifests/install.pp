@@ -4,7 +4,7 @@ class nova-vncproxy::install {
   package { "nova-vncproxy":
     ensure => latest,
     require => [
-      Apt::Source["rcb"],
+      Apt::Source["openstack-nova-trunk"],
       Package["nova-novnc"],
     ]
   }
@@ -13,7 +13,7 @@ class nova-vncproxy::install {
     ensure => latest,
     notify => Service["nova-vncproxy"],
     require => [
-      Apt::Source["rcb"],
+      Apt::Source["openstack-nova-trunk"],
     ]
   }
 

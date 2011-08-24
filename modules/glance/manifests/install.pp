@@ -17,9 +17,9 @@ class glance::install {
   
   package { $glance_packages:
     ensure => latest,
-    notify => [Service["apache2"], Service["nova-api"]],
+    notify => [Service["nova-api"]],
     require => [
-      Apt::Source["rcb"],
+      Apt::Source["openstack-glance-trunk"],
       Package["nova-common"],
       Package["python-xattr"],
       User["glance"]

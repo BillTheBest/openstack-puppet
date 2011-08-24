@@ -3,7 +3,7 @@ class nova-compute::install {
   
   package { "nova-compute":
     ensure => latest,
-    require => Apt::Source["rcb"]
+    require => Apt::Source["openstack-nova-trunk"]
   }
   
 }

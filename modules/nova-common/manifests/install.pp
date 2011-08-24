@@ -3,7 +3,7 @@ class nova-common::install {
 
   package { $nova_common_packages:
     ensure  => latest,
-    require => Apt::Source["rcb"]
+    require => Apt::Source["openstack-nova-trunk"]
   }
 
   file { "nova-default":

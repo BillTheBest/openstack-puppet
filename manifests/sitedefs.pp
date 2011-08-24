@@ -15,26 +15,26 @@ class base-node {
   include sudo
   include sysctl
   include ntp
-  include munin-node
+  #include munin-node
   include apt  # additional repos only
 }
 
 class nova-base-node {
 #  include cloudkick
   include base-node
-  include rcb-common
+  include openstack-common
   include nova-common
 }
 
 class nova-compute-node {
-  include munin-node-compute
+  #include munin-node-compute
   include nova-base-node
   include nova-compute
   include network-vlan-mgmtip
 }
 
 class nova-ha-compute-node {
-  include munin-node-compute
+  #include munin-node-compute
   include nova-base-node
   include nova-compute
   include network-vlan-bothip
@@ -48,7 +48,7 @@ class nova-xen-ha-compute-node {
   include sysctl
   include ntp
   include apt  # additional repos only
-  include rcb-common
+  include openstack-common
   include nova-common
   include nova-compute
   include nova-network
@@ -57,9 +57,9 @@ class nova-xen-ha-compute-node {
 
 class nova-ha-infra-node {
   include nova-base-node
-  include munin
-  include munin-node-infra
-  include munin-nova
+  #include munin
+  #include munin-node-infra
+  #include munin-nova
   include network-vlan-bothip
   include nova-reserve-ip
 
@@ -76,16 +76,18 @@ class nova-ha-infra-node {
   include nova-vncproxy
 
   include glance
-  include dash
-  include keystone
-  include openstackx
+  #include dash
+  if ($use_keystone == "true") {
+    include keystone
+  }
+  #include openstackx
 }
 
 class nova-infra-node {
   include nova-base-node
-  include munin
-  include munin-node-infra
-  include munin-nova
+  #include munin
+  #include munin-node-infra
+  #include munin-nova
 
   # data services
   include rabbitmq
@@ -100,9 +102,11 @@ class nova-infra-node {
   include nova-vncproxy
 
   include glance
-  include dash
-  include keystone
-  include openstackx
+  #include dash
+  if ($use_keystone == "true") {
+    include keystone
+  }
+  #include openstackx
   include network-vlan-mgmtip
   include nova-network
 }

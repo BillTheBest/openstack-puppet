@@ -3,10 +3,10 @@ class nova-api::install {
   package { "nova-api":
     ensure => latest,
     require => [
-      Apt::Source["rcb"],
+      Apt::Source["openstack-nova-trunk"],
       Package["nova-common"],
-      Package["openstackx"],
-      Package["keystone"]
+      #Package["openstackx"],
+      #Package["keystone"]
     ]
   }
 
