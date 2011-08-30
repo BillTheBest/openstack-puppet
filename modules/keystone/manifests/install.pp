@@ -13,7 +13,7 @@ class keystone::install {
     ensure => latest,
     notify => [Service["apache2"], Service["nova-api"]],
     require => [
-      Apt::Source["rcb"],
+      Apt::Source["openstack-keystone-trunk"],
       Package["nova-common"],
       User["keystone"]
     ]
