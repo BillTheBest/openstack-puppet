@@ -7,6 +7,7 @@
 --dhcpbridge_flagfile=/etc/nova/nova.conf
 --dhcpbridge=/usr/bin/nova-dhcpbridge
 --logdir=/var/log/nova
+--use_syslog=1
 --state_path=/var/lib/nova
 --lock_path=/var/lock/nova
 --max_cores=<%= has_variable?("max_cores") ? max_cores : 32 %>
