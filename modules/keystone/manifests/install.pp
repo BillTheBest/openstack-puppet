@@ -11,7 +11,7 @@ class keystone::install {
     
   package { "keystone":
     ensure => latest,
-    notify => [Service["apache2"], Service["nova-api"]],
+    notify => [Service["nova-api"]],
     require => [
       Apt::Source["openstack-keystone-trunk"],
       Package["nova-common"],
