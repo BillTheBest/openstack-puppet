@@ -20,10 +20,21 @@ class openstack-common::install {
     notify => Exec["apt-update"]
   }
 
+  apt::source { "openstack-keystone-trunk":
+    location => "http://ppa.launchpad.net/keystone-core/trunk/ubuntu",
+    release => "maverick",
+    repos => "main",
+    key => "9D5FC90B",
+    key_server => "keyserver.ubuntu.com",
+    #pin => "1",
+    notify => Exec["apt-update"]
+  }
+
   exec { "apt-update":
     command => "/usr/bin/apt-get update",
     require => [ Apt::Source["openstack-nova-trunk"],
-                 Apt::Source["openstack-glance-trunk"] ],
+                 Apt::Source["openstack-glance-trunk"],
+		 Apt::Source["openstack-keystone-trunk"] ],
     refreshonly => true
   }
 
