@@ -11,8 +11,9 @@ class glance::images {
   
   exec { "install-images":
     command => "/var/lib/glance/initial_images.sh",
-    user => "nova",
-    path => "/usr/bin:/bin",
+    # the initial install script does an su
+    #user => "nova",
+    path => ["/bin", "/usr/bin"],
     # If we are using swift, then we won't do image import
     unless => "test -f /var/lib/glance/images/1 || grep default_store /etc/glance/glance-api.conf | grep swift",
     require => [

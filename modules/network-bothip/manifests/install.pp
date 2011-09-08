@@ -13,8 +13,9 @@ class network-bothip::install {
   }
 
   exec { "restart_network":
-    command     => "/etc/init.d/networking restart",
+    command     => "/etc/init.d/networking restart && sleep 60",
     path        => [ "/bin", "/usr/bin" ],
+    notify  => Service["nova-network"],
     refreshonly => true
   }
 }

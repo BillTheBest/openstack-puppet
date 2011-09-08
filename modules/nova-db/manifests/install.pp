@@ -44,6 +44,13 @@ class nova-db::install {
   exec { "create_initial_network":
     command     => "sudo -u nova nova-manage network create private ${fixed_range} 1 ${network_size} T",
     path        => [ "/bin", "/usr/bin" ],
+    notify      => Exec["create_floating_range"],
+    refreshonly => true
+  }
+
+  exec { "create_floating_range":
+    command     => "sudo -u nova nova-manage floating create ${floating_range}",
+    path        => [ "/bin", "/usr/bin" ],
     refreshonly => true
   }
 

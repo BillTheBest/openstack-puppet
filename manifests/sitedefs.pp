@@ -73,7 +73,7 @@ class nova-ha-infra-node {
   # openstack services
   include nova-api
   include nova-scheduler
-  include nova-vncproxy
+#  include nova-vncproxy
 
   include glance
   #include dash
@@ -99,7 +99,7 @@ class nova-infra-node {
   # openstack services
   include nova-api
   include nova-scheduler
-  include nova-vncproxy
+#  include nova-vncproxy
 
   include glance
   #include dash

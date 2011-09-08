@@ -6,7 +6,7 @@ class nova-api::install {
       Apt::Source["openstack-nova-trunk"],
       Package["nova-common"],
       #Package["openstackx"],
-      #Package["keystone"]
+      Package["keystone"]
     ]
   }
 

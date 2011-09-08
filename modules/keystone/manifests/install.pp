@@ -11,12 +11,19 @@ class keystone::install {
     
   package { "keystone":
     ensure => latest,
-    notify => [Service["nova-api"]],
+    notify => [Exec["fix_tools_tracer"], Service["nova-api"]],
     require => [
       Apt::Source["openstack-keystone-trunk"],
       Package["nova-common"],
       User["keystone"]
     ]
+  }
+
+  file { "/etc/keystone":
+    ensure  => directory,
+    owner   => "keystone",
+    mode    => 0755,
+    require => Package["keystone"]
   }
 
   file { "keystone.conf":
@@ -26,7 +33,7 @@ class keystone::install {
     mode    => 0600,
     content => template("keystone/keystone.conf.erb"),
     notify => Service["keystone"],
-    require => Package["keystone"]
+    require => [Package["keystone"], File["/etc/keystone"], Exec["fix_tools_tracer"]]
   }
   
   file { "initial_data.sh":
@@ -47,6 +54,16 @@ class keystone::install {
       Package['keystone'],
       File['keystone.conf'],
       File["initial_data.sh"]
+    ]
+  }
+
+  exec { "fix_tools_tracer":
+    command     => 'sed -e "s,^import tools.tracer,#import tools.tracer," -i /usr/lib/python2.6/dist-packages/keystone/middleware/auth_token.py /usr/bin/keystone',
+    path        => [ "/bin", "/usr/bin" ],
+    notify => [Service["nova-api"]],
+    refreshonly => true,
+    require     => [
+      Package['keystone'],
     ]
   }
 
